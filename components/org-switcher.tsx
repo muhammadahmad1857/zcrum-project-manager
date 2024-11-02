@@ -6,20 +6,20 @@ import {
   useOrganization,
   useUser,
 } from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 
 const OrgSwitcher = () => {
   const { isLoaded } = useOrganization();
   const { isLoaded: isUserLoaded } = useUser();
-  const pathname = usePathname();
+//   const pathname = usePathname();
 
   if (!isLoaded || !isUserLoaded) {
     return null;
   }
 
-  // Determine the organization mode
-  const createOrganizationMode = 
-    pathname === "/onboarding" ? "navigation" : "modal";
+//   // Determine the organization mode
+//   const createOrganizationMode: "navigation" | "modal" = 
+//     pathname === "/onboarding" ? "navigation" : "modal";
 
   return (
     <div>
@@ -28,7 +28,7 @@ const OrgSwitcher = () => {
           hidePersonal
           afterCreateOrganizationUrl={"/organization/:slug"}
           afterSelectOrganizationUrl={"/organization/:slug"}
-          createOrganizationMode={createOrganizationMode}
+        //   createOrganizationMode={createOrganizationMode}
           appearance={{
             elements: {
               organizationSwitcherTrigger: "border border-gray-300 rounded-md px-5 py-2",
