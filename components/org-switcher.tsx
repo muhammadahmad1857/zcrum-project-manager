@@ -24,10 +24,11 @@ const OrgSwitcher = () => {
   return (
     <div className="flex justify-end mt-1">
       <SignedIn>
+       
         <OrganizationSwitcher
           hidePersonal
           createOrganizationMode={
-            pathname === "/onboarding" ? "navigation" : "modal"
+            pathname === "/onboarding" ? "navigation" : undefined
           }
           afterCreateOrganizationUrl="/organization/:slug"
           afterSelectOrganizationUrl="/organization/:slug"
