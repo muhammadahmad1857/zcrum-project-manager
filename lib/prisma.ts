@@ -1,8 +1,11 @@
+export interface Global {
+  prisma: PrismaClient | undefined;
+}
 import { PrismaClient } from "@prisma/client";
-export const db = globalThis.prisma || new PrismaClient();
+export const db = global.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
-  globalThis.prisma = db;
+  global.prisma = db;
 }
 
 // globalThis.prisma: This global variable ensures that the Prisma client instance is reused across hot reloads during development. Without this, each time your application reloads, a new instance of the Prisma client would be created, potentially leading to connection issues.
