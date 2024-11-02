@@ -5,6 +5,7 @@ import React from "react";
 const Organization = async ({ params }: { params: { orgid: string } }) => {
   const { orgid } = params;
   const organization = await getOrganizations(orgid);
+  console.log(organization);
   if (!organization) {
     return <div>Organization not found</div>;
   }
@@ -14,7 +15,7 @@ const Organization = async ({ params }: { params: { orgid: string } }) => {
         <h1 className="text-5xl font-bold gradient-title pb-2">
           {organization.name}&apos;s projects
         </h1>
-        <OrgSwitcher/>
+        <OrgSwitcher />
       </div>
       <div className="mb-4">Show org projects</div>
       <div className="mb-4">Show user assigned and reported issue her8</div>
