@@ -6,6 +6,7 @@ const isProtectedRoute = createRouteMatcher([
   "/organisation(.*)",
   "/project(.*)",
   "/issue(.*)",
+  "/sprint(.*)",
 ]);
 
 export default clerkMiddleware((auth, req) => {
@@ -16,7 +17,7 @@ export default clerkMiddleware((auth, req) => {
   if (
     auth().userId &&
     !auth().orgId &&
-    req.nextUrl.pathname !== "onboarding" &&
+    req.nextUrl.pathname !== "/onboarding" &&
     req.nextUrl.pathname !== "/"
   ) {
     return NextResponse.redirect(new URL("/onboarding", req.url));

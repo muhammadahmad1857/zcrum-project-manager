@@ -32,6 +32,6 @@ export const checkUser = async () => {
 
     return newUser;
   } catch (error) {
-    console.log("Error while creating or finding the user", error);
+    console.log(error);
   }
 };
