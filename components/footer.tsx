@@ -2,9 +2,9 @@ import Link from "next/link";
 import React from "react";
 const Footer = () => {
   return (
-    <>
+    <section className="bg-gray-900">
       <div className="w-full h-[1px]   bg-gray-200 mt-12"></div>
-      <footer className="flex justify-between max-sm:flex-col text-center items-center bg-gray-900  gap-8 max-sm:px-4 p-10">
+      <footer className="flex container mx-auto justify-between max-sm:flex-col text-center items-center   gap-8 max-sm:px-4 p-10">
         <p>
           Made with ❤️ by{" "}
           <Link
@@ -56,8 +56,7 @@ const Footer = () => {
             <div className="absolute top-full left-0 w-full h-full rounded-full bg-[#006699] z-0 transition-all duration-500 group-hover:top-0"></div>
           </Link>
           <Link
-                      target="_blank"
-
+            target="_blank"
             href={"https://youtube.com/@code-with-ahmad2009?sub_confirmation=1"}
             className="w-10 h-10 flex items-center relative overflow-hidden justify-center rounded-full bg-white shadow-md shadow-gray-200 group transition-all duration-300"
           >
@@ -83,7 +82,7 @@ const Footer = () => {
           </Link>
         </div>
       </footer>
-    </>
+    </section>
   );
 };
 

@@ -7,15 +7,20 @@ const projectList = async ({ orgId }: { orgId: string }) => {
   const projects = await getProjects(orgId);
   if (projects.length === 0) {
     return (
-      <p>
-        No projects found for this organization{"  "}
+      <div className="text-center py-10 bg-gray-900 rounded-2xl border-2 border-gray-700 cursor-pointer hover:bg-gray-950 transition-colors duration-500">
+        <h2 className="text-lg font-semibold mb-4">
+          No projects found for this organization
+        </h2>
+        <p>
+          It's quiet for now, but you can start creating projects right away!
+        </p>
         <Link
-          className="underline underline-offset-2 text-blue-200"
+          className="mt-4 inline-block bg-blue-500 hover:bg-blue-700 transition-colors duration-500 text-white font-bold py-2 px-4 rounded"
           href={"/projects/create"}
         >
-          Create new...
+          Create new project
         </Link>
-      </p>
+      </div>
     );
   }
   return (

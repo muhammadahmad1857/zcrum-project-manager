@@ -52,11 +52,23 @@ const CreateProject = () => {
 
   if (!isAdmin) {
     return (
-      <div className="flex min-h-[calc(100vh-50px)] text-center flex-col gap-2 items-center justify-center">
-        <span className="text-4xl gradient-title">
-          Oops! Only Admins can create projects.
-        </span>
-        <OrgSwitcher />
+      <div className=" min-h-[calc(100vh-50px)] flex flex-col items-center justify-center text-center ">
+        <span className="text-4xl gradient-title">Admin Access Required</span>
+        <p className="text-lg text-gray-500">
+          You need to be an organization admin to create projects. Please
+          contact your organization's admin for assistance or switch to the
+          correct organization.
+        </p>
+        <div className="flex items-center sm:flex-row flex-col justify-between gap-2 mt-4">
+          <Button
+            className="bg-blue-500 text-white transition-all duration-500 hover:-translate-y-2 hover:bg-blue-600"
+            size={"lg"}
+            onClick={() => router.push("/onboarding")}
+          >
+            Create Organization
+          </Button>
+          <OrgSwitcher />
+        </div>
       </div>
     );
   }
