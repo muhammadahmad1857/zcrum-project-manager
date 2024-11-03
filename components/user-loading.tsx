@@ -7,7 +7,7 @@ const UserLoading = () => {
   const { isLoaded: isUserLoaded } = useUser();
   if (!isLoaded || !isUserLoaded) {
     return (
-      <div className="flex flex-col min-h-screen items-center justify-center">
+      <div className="flex flex-col fixed inset-0 z-50 dotted-background w-screen min-h-screen items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" height="200" width="200">
           <g style={{ order: -1 }}>
             <polygon

@@ -22,7 +22,7 @@ const Header = async () => {
           />
         </Link>
         <div className="flex items-center gap-4 mr-2">
-          <Link href={"/project/create"}>
+          <Link href={"/projects/create"}>
             <Button
               size={"sm"}
               className="flex items-center gap-2"
@@ -42,7 +42,7 @@ const Header = async () => {
           </SignedIn>
         </div>
       </nav>
-      <UserLoading/>
+      <UserLoading />
     </header>
   );
 };

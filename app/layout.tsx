@@ -6,6 +6,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,7 +43,9 @@ export default function RootLayout({
         <body className={`${inter.className} dotted-background`}>
           <ThemeProvider attribute="class" defaultTheme="dark">
             <Header />
-            <main className="min-h-screen">{children}</main>
+            <main className="min-h-screen">
+              {children} <Toaster richColors />
+            </main>
             <Footer />
           </ThemeProvider>
         </body>
