@@ -7,7 +7,7 @@
     text-wrap: balance;
   }
   .gradient-title{
-    @apply font-extrabold select-none cursor-text bg-gradient-to-br from-blue-500 via-blue-100 to-blue-400 bg-clip-text tracking-tight text-transparent pr-2 pb-2
+    @apply font-extrabold select-none cursor-text bg-gradient-to-br from-blue-500 via-blue-100 to-blue-400 bg-clip-text tracking-tight text-transparent pr-2 pb-2;
   }
 }
 
