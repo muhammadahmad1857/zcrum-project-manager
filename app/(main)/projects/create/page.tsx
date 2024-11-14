@@ -56,7 +56,7 @@ const CreateProject = () => {
         <span className="text-4xl gradient-title">Admin Access Required</span>
         <p className="text-lg text-gray-500">
           You need to be an organization admin to create projects. Please
-          contact your organization's admin for assistance or switch to the
+          contact your organization&apos;s admin for assistance or switch to the
           correct organization.
         </p>
         <div className="flex items-center sm:flex-row flex-col justify-between gap-2 mt-4">

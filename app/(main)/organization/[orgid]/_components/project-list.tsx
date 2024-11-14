@@ -12,7 +12,8 @@ const projectList = async ({ orgId }: { orgId: string }) => {
           No projects found for this organization
         </h2>
         <p>
-          It's quiet for now, but you can start creating projects right away!
+          It&apos;s quiet for now, but you can start creating projects right
+          away!
         </p>
         <Link
           className="mt-4 inline-block bg-blue-500 hover:bg-blue-700 transition-colors duration-500 text-white font-bold py-2 px-4 rounded"
