@@ -6,8 +6,8 @@
   .text-balance {
     text-wrap: balance;
   }
-  .gradient-title{
-    @apply font-extrabold select-none cursor-text bg-gradient-to-br from-blue-500 via-blue-100 to-blue-400 bg-clip-text tracking-tight text-transparent pr-2 pb-2;
+  .gradient-title {
+    @apply font-extrabold select-none bg-gradient-to-br from-blue-500 via-blue-100 to-blue-400 bg-clip-text tracking-tight text-transparent pr-2 pb-2 cursor-default;
   }
 }
 
@@ -71,18 +71,17 @@
   * {
     @apply border-border;
   }
- body  {
-    @apply bg-background text-foreground ;
+  body {
+    @apply bg-background text-foreground;
   }
-  html{
-    @apply scroll-smooth
+  html {
+    @apply scroll-smooth;
   }
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background:transparent;
-
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
     background-color: #ebebeb;
@@ -90,7 +89,6 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background-color: #cfc8c8;
-   
   }
 }
 
@@ -99,7 +97,6 @@
   background-image: radial-gradient(#4a5568 1px, transparent 1px);
   background-size: 30px 30px;
 }
-
 
 @keyframes bounce {
   0%,
