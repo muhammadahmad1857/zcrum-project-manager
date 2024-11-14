@@ -6,6 +6,7 @@ const isProtectedRoute = createRouteMatcher([
   "/organisation(.*)",
   "/project(.*)",
   "/issue(.*)",
+  "/sprint(.*)",
 ]);
 
 export default clerkMiddleware((auth, req) => {
@@ -31,5 +32,3 @@ export const config = {
     "/(api|trpc)(.*)",
   ],
 };
-
-
