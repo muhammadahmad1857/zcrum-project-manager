@@ -12,9 +12,11 @@ import { createProject } from "@/actions/projects";
 import useFetch from "@/hooks/use-fetch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Head from "next/head";
+
 const CreateProject = () => {
   const router = useRouter();
-  const { isLoaded: isOrgLoaded, membership } = useOrganization();
+  const { isLoaded: isOrgLoaded, membership, organization } = useOrganization();
   const { isLoaded: isUserLoaded } = useUser();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
@@ -52,7 +54,7 @@ const CreateProject = () => {
 
   if (!isAdmin) {
     return (
-      <div className=" min-h-[calc(100vh-50px)] flex flex-col items-center justify-center text-center ">
+      <div className="min-h-[calc(100vh-50px)] flex flex-col items-center justify-center text-center">
         <span className="text-4xl gradient-title">Admin Access Required</span>
         <p className="text-lg text-gray-500">
           You need to be an organization admin to create projects. Please
@@ -75,9 +77,46 @@ const CreateProject = () => {
 
   return (
     <div className="container mx-auto py-10">
+      <Head>
+        <title>Create New Project | Project Management</title>
+        <meta
+          name="description"
+          content="Create a new project in your organization and start managing your tasks and team efficiently."
+        />
+        <meta
+          name="keywords"
+          content="project management, create project, organization management, team management"
+        />
+        <meta
+          property="og:title"
+          content="Create New Project | Project Management"
+        />
+        <meta
+          property="og:description"
+          content="Create a new project in your organization and start managing your tasks and team efficiently."
+        />
+        <meta property="og:url" content="https://example.com/projects/create" />
+        <meta property="og:type" content="website" />
+        <meta property="twitter:card" content="summary" />
+        <meta
+          property="twitter:title"
+          content="Create New Project | Project Management"
+        />
+        <meta
+          property="twitter:description"
+          content="Create a new project in your organization and start managing your tasks and team efficiently."
+        />
+      </Head>
       <h1 className="text-6xl text-center font-bold mb-8 gradient-title">
         Create New Project
       </h1>
+      <div className="flex flex-col md:flex-row px-4 justify-center md:justify-between items-center md:items-start gap-4 md:gap-10 mb-10">
+        <p className="text-lg md:text-start text-center  text-gray-500">
+          You are creating a project in <strong>{organization?.name}</strong>.
+          If you want to switch organizations, please use the switcher below.
+        </p>
+        <OrgSwitcher isCreating={true} />
+      </div>
 
       <form
         className="flex flex-col space-y-4"

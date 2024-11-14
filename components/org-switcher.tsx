@@ -8,7 +8,11 @@ import {
   useUser,
 } from "@clerk/nextjs";
 
-const OrgSwitcher = () => {
+const OrgSwitcher = ({
+  isCreating = false,
+}: {
+  isCreating?: boolean | undefined;
+}) => {
   const { isLoaded } = useOrganization();
   const { isLoaded: isUserLoaded } = useUser();
   const pathname = usePathname();
@@ -29,8 +33,8 @@ const OrgSwitcher = () => {
           createOrganizationMode={
             pathname === "/onboarding" ? "navigation" : undefined
           }
-          afterCreateOrganizationUrl="/organization/:slug"
-          afterSelectOrganizationUrl="/organization/:slug"
+          afterCreateOrganizationUrl={!isCreating ? "/organization/:slug" : undefined}
+          afterSelectOrganizationUrl={!isCreating ? "/organization/:slug" : undefined}
           createOrganizationUrl="/onboarding"
           appearance={{
             elements: {

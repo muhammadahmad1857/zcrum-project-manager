@@ -1,13 +1,12 @@
-"use client";
-
 import { OrganizationList } from "@clerk/nextjs";
-// import { useRouter } from "next/navigation";
-// import { useEffect } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Onboarding || ZCRUM - Your very own project manager',
+  description: 'Get started with ZCRUM by selecting or creating an organization.'
+};
 
 export default function Onboarding() {
-  // const { organization } = useOrganization();
-  // const router = useRouter();
-
   return (
     <div className="flex justify-center items-center pt-14">
       <OrganizationList

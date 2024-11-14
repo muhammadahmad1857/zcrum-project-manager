@@ -20,7 +20,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { ForwardRefExoticComponent } from "react";
 import { RefAttributes } from "react";
-import faqs from "@/data/faqs.json";
+import faqs from "@/data/faqs.json"
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'Home Page || ZCRUM - Your very own project manager',
+  description: 'Discover how ZCRUM can streamline your workflow and enhance team collaboration with its intuitive project management features.',
+}
+ 
+
 export default function Home() {
   interface FAQ {
     question: string;

@@ -1,5 +1,12 @@
 import Link from "next/link";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Not Found || ZCRUM - Your very own project manager",
+  description:
+    "Oops! It seems like the page you're looking for doesn't exist. You might have mistyped the URL or the content might have been removed.",
+};
 
 const NotFound = () => {
   return (
