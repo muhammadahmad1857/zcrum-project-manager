@@ -15,7 +15,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { CalendarIcon } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+import { DateRange, DayPicker } from "react-day-picker";
 import { format, addDays } from "date-fns";
 
 import { sprintSchema } from "@/app/lib/validation";
@@ -35,7 +35,7 @@ export default function SprintCreationForm({
   sprintKey,
 }:PropsInterface) {
   const [showForm, setShowForm] = useState(false);
-  const [dateRange, setDateRange] = useState({
+  const [dateRange, setDateRange] = useState<DateRange>({
     from: new Date(),
     to: addDays(new Date(), 14),
   });
