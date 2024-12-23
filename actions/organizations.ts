@@ -41,6 +41,7 @@ export const getOrganizationUsers = async (orgId: string) => {
   if (!userId) {
     throw new Error("Unauthorized");
   }
+
   const user = await db?.user.findUnique({
     where: {
       clerkUserId: userId,
@@ -54,10 +55,17 @@ export const getOrganizationUsers = async (orgId: string) => {
     await clerkClient().organizations.getOrganizationMembershipList({
       organizationId: orgId,
     });
+
+  // Check if the user is the only member
   const userIds = organizationMembership.data
     .map((member) => member.publicUserData?.userId)
     .filter((id): id is string => !!id);
 
+  if (userIds.length === 1 && userIds[0] === userId) {
+    return [user]; // Return only the current user
+  }
+
+  // Fetch all users if there are multiple members
   const users = await db?.user.findMany({
     where: {
       clerkUserId: { in: userIds },

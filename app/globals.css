@@ -152,3 +152,9 @@
   translate: 0px 46px;
   animation-delay: 0.5s;
 }
+
+.wmde-markdown ul {
+  list-style-type: disc;
+  padding-left: 15px !important;
+  color: white;
+}
