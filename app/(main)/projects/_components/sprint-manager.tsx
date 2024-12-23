@@ -220,6 +220,7 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }: Props) => {
           <Button
             onClick={() => handleStatusChange("COMPLETED")}
             variant="destructive"
+            size={"lg"}
             disabled={loading}
           >
             {loading ? <Loader /> : "End Sprint"}
