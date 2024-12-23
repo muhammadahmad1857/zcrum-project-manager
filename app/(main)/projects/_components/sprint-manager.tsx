@@ -195,7 +195,7 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }: Props) => {
     <>
       <div className="flex justify-between items-center gap-4">
         <Select value={sprint.id} onValueChange={handleSprintValueChange}>
-          <SelectTrigger className="bg-slate-950 self-start">
+          <SelectTrigger className="bg-slate-950 self-start py-6">
             <SelectValue placeholder="Select Sprint" />
           </SelectTrigger>
           <SelectContent>
@@ -212,6 +212,7 @@ const SprintManager = ({ sprint, setSprint, sprints, projectId }: Props) => {
             onClick={() => handleStatusChange("ACTIVE")}
             className="bg-green-500 hover:bg-green-600 transition-colors duration-500 text-white"
             disabled={loading}
+            size={'lg'}
           >
             {loading ? <Loader /> : "Start Sprint"}
           </Button>
