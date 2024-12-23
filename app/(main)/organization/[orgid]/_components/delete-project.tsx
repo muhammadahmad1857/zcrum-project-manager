@@ -20,6 +20,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 const DeleteProject = ({ projectId }: { projectId: string }) => {
   const { membership } = useOrganization();
+  const router = useRouter();
+
   const {
     data: deleted,
     // error,
@@ -34,7 +36,6 @@ const DeleteProject = ({ projectId }: { projectId: string }) => {
   }, [deleted]);
   const isAdmin = membership?.role === "org:admin";
   if (!isAdmin) return null;
-  const router = useRouter();
 
   return (
     <>
