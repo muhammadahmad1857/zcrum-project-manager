@@ -6,7 +6,7 @@ type FetchFunction = (...args: any[]) => Promise<any>;
 
 interface FetchState {
   data: any;
-  loading: boolean | null;
+  loading: boolean ;
   error: any;
 }
 
@@ -17,7 +17,7 @@ const useFetch = (
   setData: Dispatch<SetStateAction<any>>;
 } => {
   const [data, setData] = useState<any>(undefined);
-  const [loading, setLoading] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
 
   const fn: FetchFunction = async (...args: any[]) => {

@@ -35,3 +35,33 @@ export const getOrganizations = async (slug: string) => {
   }
   return organization;
 };
+
+export const getOrganizationUsers = async (orgId: string) => {
+  const { userId } = auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+  const user = await db?.user.findUnique({
+    where: {
+      clerkUserId: userId,
+    },
+  });
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const organizationMembership =
+    await clerkClient().organizations.getOrganizationMembershipList({
+      organizationId: orgId,
+    });
+  const userIds = organizationMembership.data
+    .map((member) => member.publicUserData?.userId)
+    .filter((id): id is string => !!id);
+
+  const users = await db?.user.findMany({
+    where: {
+      clerkUserId: { in: userIds },
+    },
+  });
+  return users;
+};

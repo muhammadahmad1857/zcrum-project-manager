@@ -164,8 +164,10 @@ const CreateProject = () => {
           )}
         </div>
         <Button
-          disabled={loading ? true : false}
-          className="bg-blue-500 text-white transition-all duration-500 mt-2 hover:-translate-y-2 hover:bg-blue-600"
+          disabled={loading}
+          className={`bg-blue-500 text-white transition-all duration-500 mt-2 hover:-translate-y-2 hover:bg-blue-600 ${
+            loading && "cursor-not-allowed opacity-50"
+          }`}
           size={"lg"}
           type="submit"
         >
