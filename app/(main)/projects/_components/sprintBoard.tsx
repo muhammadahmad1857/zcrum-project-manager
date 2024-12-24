@@ -18,6 +18,7 @@ import { getIssuesForSprint, updateIssueOrder } from "@/actions/issues";
 import { BarLoader } from "react-spinners";
 import IssueCard from "@/components/issueCard";
 import { toast } from "sonner";
+import BoardFilters from "./board-filters";
 
 // Define the types for statuses
 interface Status {
@@ -75,6 +76,12 @@ const SprintBoard = ({ sprints, projectId, orgId }: SprintBoardProps) => {
       fetchIssues(currentSprint.id);
     }
   }, [currentSprint.id, fetchIssues]);
+
+  const [filteredIssues,setFilteredIssues] = useState(issues);
+
+  const handleFilterChange=(newFilteredIssues:Issue[])=>{
+    setFilteredIssues(newFilteredIssues);
+  }
 
   const onDragEnd = (result: DropResult) => {
     if (currentSprint.status === "PLANNED") {
@@ -152,6 +159,12 @@ const SprintBoard = ({ sprints, projectId, orgId }: SprintBoardProps) => {
         sprints={sprints}
         projectId={projectId}
       />
+
+      {
+        issues && !issueLoading&&(
+          <BoardFilters issues={issues} onFilterChange={handleFilterChange}/>
+        )
+      }
       {UpdatedIssuesError && (
         <p className="text-red-500 mt-2">{UpdatedIssuesError.message}</p>
       )}
@@ -174,7 +187,7 @@ const SprintBoard = ({ sprints, projectId, orgId }: SprintBoardProps) => {
                     {column.name}
                   </h3>
                   {/* Issues */}
-                  {(issues || [])
+                  {(filteredIssues || [])
                     .filter((issue: Issue) => issue.status === column.key)
                     .map((issue: Issue, index: number) => (
                       <Draggable
