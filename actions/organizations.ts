@@ -132,7 +132,7 @@ export async function getOrganizationUsers(orgId: string) {
     }
 
     const organizationMembership =
-      await clerkClient.organizations.getOrganizationMembershipList({
+      await clerkClient().organizations.getOrganizationMembershipList({
         organizationId: orgId,
       });
 

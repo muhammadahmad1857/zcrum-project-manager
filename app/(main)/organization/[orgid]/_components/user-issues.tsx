@@ -6,7 +6,7 @@ import { getUserIssues } from "@/actions/issues";
 
 const UserIssues = async ({ userId }: { userId: string }) => {
   const iss: any = await getUserIssues(userId);
-  const issues =  iss.data
+  const issues = iss.data;
   if (issues.length === 0) {
     return (
       <div>
@@ -25,20 +25,32 @@ const UserIssues = async ({ userId }: { userId: string }) => {
   return (
     <>
       <h1 className="text-4xl font-bold gradient-title mb-4">My Issues</h1>
-      <Tabs defaultValue="account" className="w-full">
+      <Tabs defaultValue="assigned" className="w-full">
         <TabsList>
           <TabsTrigger value="assigned">Assigned To Your</TabsTrigger>
           <TabsTrigger value="reported">Reported to you</TabsTrigger>
         </TabsList>
         <TabsContent value="assigned">
           <Suspense fallback={<Loader />}>
-            <IssueGrid issues={assignedIssues} />
+            {assignedIssues.length > 0 ? (
+              <IssueGrid issues={assignedIssues} />
+            ) : (
+              <p className="text-lg font-semibold text-gray-400">
+                No Issues assigned to you.
+              </p>
+            )}{" "}
           </Suspense>
         </TabsContent>
         <TabsContent value="reported">
           {" "}
           <Suspense fallback={<Loader />}>
-            <IssueGrid issues={reportedIssues} />
+            {reportedIssues.length > 0 ? (
+              <IssueGrid issues={reportedIssues} />
+            ) : (
+              <p className="text-lg font-semibold text-gray-400">
+                No Issues reported to you.
+              </p>
+            )}{" "}
           </Suspense>
         </TabsContent>
       </Tabs>
