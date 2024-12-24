@@ -6,7 +6,7 @@ const UserAvatar = ({ user }: { user: User }) => {
   return (
     <div className="flex items-center space-x-2 w-full">
       <Avatar className="size-6">
-        <AvatarImage src={user?.imageUrl} alt={user?.name} />
+        <AvatarImage src={user?.imageUrl || undefined} alt={user?.name || undefined} />
         <AvatarFallback className="capitalize">
           {user ? user?.name : "?"}
         </AvatarFallback>
