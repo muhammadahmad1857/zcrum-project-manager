@@ -1,6 +1,6 @@
 "use client";
 
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -103,7 +103,7 @@ const CreateIssue = ({
       console.error("Error creating issue", error);
     }
   };
-console.log(projectId)
+  console.log(projectId);
   return (
     <Drawer open={isOpen} onClose={onClose}>
       <DrawerContent>
@@ -212,7 +212,7 @@ console.log(projectId)
               )}
             />
           </div>
-          {error && <p className="text-red-500 mt-2">{error.message}</p>}
+          {error && <p className="text-red-500 mt-2">{error}</p>}
           <Button
             type="submit"
             className="w-full"

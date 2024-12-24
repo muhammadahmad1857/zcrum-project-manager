@@ -77,11 +77,11 @@ const SprintBoard = ({ sprints, projectId, orgId }: SprintBoardProps) => {
     }
   }, [currentSprint.id, fetchIssues]);
 
-  const [filteredIssues,setFilteredIssues] = useState(issues);
+  const [filteredIssues, setFilteredIssues] = useState(issues);
 
-  const handleFilterChange=(newFilteredIssues:Issue[])=>{
+  const handleFilterChange = (newFilteredIssues: Issue[]) => {
     setFilteredIssues(newFilteredIssues);
-  }
+  };
 
   const onDragEnd = (result: DropResult) => {
     if (currentSprint.status === "PLANNED") {
@@ -160,13 +160,11 @@ const SprintBoard = ({ sprints, projectId, orgId }: SprintBoardProps) => {
         projectId={projectId}
       />
 
-      {
-        issues && !issueLoading&&(
-          <BoardFilters issues={issues} onFilterChange={handleFilterChange}/>
-        )
-      }
+      {issues && !issueLoading && (
+        <BoardFilters issues={issues} onFilterChange={handleFilterChange} />
+      )}
       {UpdatedIssuesError && (
-        <p className="text-red-500 mt-2">{UpdatedIssuesError.message}</p>
+        <p className="text-red-500 mt-2">{UpdatedIssuesError}</p>
       )}
       {(issueLoading || updateIssueLoading) && (
         <BarLoader className="mt-4" width="100%" color="#36d7b7" />

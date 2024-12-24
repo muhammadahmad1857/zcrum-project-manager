@@ -72,7 +72,7 @@
 //     }
 //     catch (error:any) {
 //       console.error("Error creating sprint", error);
-//       toast.error("Something went wrong",error.message)
+//       toast.error("Something went wrong",error)
 //     }
 //   };
 
@@ -257,7 +257,7 @@ export default function SprintCreationForm({
       router.refresh(); // Refresh the page to show updated data
     } catch (error: any) {
       console.error("Error creating sprint", error);
-      toast.error("Something went wrong: " + error.message);
+      toast.error("Something went wrong: " + error);
     }
   };
 
@@ -361,7 +361,7 @@ export default function SprintCreationForm({
               </div>
               <Button
                 type="submit"
-                className={createSprintLoading ? "cursor-not-allowed":""}
+                className={createSprintLoading ? "cursor-not-allowed" : ""}
                 disabled={createSprintLoading}
               >
                 {createSprintLoading ? "Creating..." : "Create Sprint"}
