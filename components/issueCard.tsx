@@ -12,16 +12,20 @@ import { Badge } from "./ui/badge";
 import UserAvatar from "./userAvatar";
 import { formatDistanceToNow } from "date-fns";
 import { Issue, IssuePriority, User } from "@prisma/client";
+import IssueDetailDialog from "./issue-detail-dialog";
+import { useRouter } from "next/navigation";
 
 // Define the IssueCard Props
-interface Props {
+interface IssueCardProps {
   issue: Issue & { assignee?: User }; // Issue with optional User relationship
   showStatus?: boolean;
-  onDelete?: () => void;
-  onUpdate?: () => void;
+  onDelete?: (issues: Issue[]) => void;
+  onUpdate?: (issues: Issue[]) => void;
 }
 
-// Map priorities to CSS classes with explicit typing
+// Define the IssueDetailDialog Props
+
+// Map priorities to CSS classes
 const priorityColor: Record<IssuePriority, string> = {
   LOW: "border-green-600",
   MEDIUM: "border-yellow-300",
@@ -29,20 +33,35 @@ const priorityColor: Record<IssuePriority, string> = {
   URGENT: "border-red-400",
 };
 
-const IssueCard = ({
+const IssueCard: React.FC<IssueCardProps> = ({
   issue,
   showStatus = false,
   onDelete = () => {},
   onUpdate = () => {},
-}: Props) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false); // Added default state value
+}) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const created = formatDistanceToNow(new Date(issue.createdAt), {
     addSuffix: true,
   });
 
+  const router = useRouter();
+
+  const onDeleteHandler = (issues: Issue[]) => {
+    router.refresh();
+    onDelete(issues);
+  };
+
+  const onUpdateHandler = (issues: Issue[]) => {
+    router.refresh();
+    onUpdate(issues);
+  };
+
   return (
     <>
-      <Card className="cursor-pointer hover:shadow-lg  transition-shadow">
+      <Card
+        className="cursor-pointer hover:shadow-lg transition-shadow"
+        onClick={() => setIsDialogOpen(true)}
+      >
         <CardHeader
           className={`border-t-2 ${priorityColor[issue.priority]} rounded-lg`}
         >
@@ -59,6 +78,16 @@ const IssueCard = ({
           <div className="text-xs text-gray-400 w-full">Created: {created}</div>
         </CardFooter>
       </Card>
+      {isDialogOpen && (
+        <IssueDetailDialog
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          issue={issue}
+          onDelete={onDeleteHandler}
+          onUpdate={onUpdateHandler}
+          borderColor={priorityColor[issue.priority]}
+        />
+      )}
     </>
   );
 };

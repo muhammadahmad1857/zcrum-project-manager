@@ -293,7 +293,8 @@ export default function SprintCreationForm({
                   id="name"
                   {...register("name")}
                   readOnly
-                  className="bg-slate-950"
+                  className="bg-slate-950 cursor-not-allowed
+                  "
                 />
                 {errors.name && (
                   <p className="text-red-500 text-sm mt-1">
@@ -358,7 +359,11 @@ export default function SprintCreationForm({
                   </p>
                 )}
               </div>
-              <Button type="submit"  disabled={createSprintLoading}>
+              <Button
+                type="submit"
+                className={createSprintLoading ? "cursor-not-allowed":""}
+                disabled={createSprintLoading}
+              >
                 {createSprintLoading ? "Creating..." : "Create Sprint"}
               </Button>
             </form>

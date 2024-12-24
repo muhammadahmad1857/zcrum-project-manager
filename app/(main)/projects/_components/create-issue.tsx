@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -45,8 +45,6 @@ const CreateIssue = ({
   onIssueCreated,
   orgId,
 }: IssueProps) => {
-  const [isSingleUser, setIsSingleUser] = useState(false);
-
   const {
     control,
     register,
@@ -78,13 +76,7 @@ const CreateIssue = ({
 
   useEffect(() => {
     if (isOpen && orgId) {
-      fetchUsers(orgId).then((fetchedUsers) => {
-        if (
-          fetchedUsers.length === 1 
-        ) {
-          setIsSingleUser(true);
-        }
-      });
+      fetchUsers(orgId);
     }
   }, [isOpen, orgId]);
 
@@ -111,7 +103,7 @@ const CreateIssue = ({
       console.error("Error creating issue", error);
     }
   };
-
+console.log(projectId)
   return (
     <Drawer open={isOpen} onClose={onClose}>
       <DrawerContent>
@@ -142,28 +134,28 @@ const CreateIssue = ({
             >
               Assignee
             </label>
-            
-              <Controller
-                name="assigneeId"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Assignee" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {users?.map((user: any) => (
-                        <SelectItem key={user.id} value={user.id}>
-                          {user?.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
+
+            <Controller
+              name="assigneeId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Assignee" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {users?.map((user: any) => (
+                      <SelectItem key={user.id} value={user.id}>
+                        {user?.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
             {errors.assigneeId && (
               <p className="text-red-500 text-sm mt-1">
                 {String(errors.assigneeId.message)}
