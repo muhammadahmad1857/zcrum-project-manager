@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 
 const Organization = async ({ params }: { params: { orgid: string } }) => {
   const { orgid } = params;
-  const organization = await getOrganizations(orgid);
+  const org = await getOrganizations(orgid);
+  const organization = org.data
   const { userId } = auth();
   if(!userId){
     redirect("/sign-in")

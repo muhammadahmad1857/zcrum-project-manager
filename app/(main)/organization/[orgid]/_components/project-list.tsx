@@ -5,7 +5,8 @@ import React from "react";
 import DeleteProject from "./delete-project";
 
 const projectList = async ({ orgId }: { orgId: string }) => {
-  const projects = await getProjects(orgId);
+  const proj = await getProjects(orgId);
+  const projects = proj.data||[]
   if (projects.length === 0) {
     return (
       <div className="text-center py-10 bg-gray-900 rounded-2xl border-2 border-gray-700 cursor-pointer hover:bg-gray-950 transition-colors duration-500">

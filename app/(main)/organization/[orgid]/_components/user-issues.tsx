@@ -5,7 +5,8 @@ import Loader from "@/components/loader";
 import { getUserIssues } from "@/actions/issues";
 
 const UserIssues = async ({ userId }: { userId: string }) => {
-  const issues: any = await getUserIssues(userId);
+  const iss: any = await getUserIssues(userId);
+  const issues =  iss.data
   if (issues.length === 0) {
     return (
       <div>
