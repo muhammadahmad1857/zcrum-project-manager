@@ -2,11 +2,11 @@
 import { toast } from "sonner";
 import { useState, Dispatch, SetStateAction } from "react";
 
-type FetchFunction = (...args: any[]) => Promise<any>;
+type FetchFunction = (...args: any[]) => Promise<{ data?: any; error?: string }>;
 
 interface FetchState {
   data: any;
-  loading: boolean ;
+  loading: boolean;
   error: any;
 }
 
@@ -25,9 +25,15 @@ const useFetch = (
     setError(null);
     try {
       const response = await cb(...args);
-      setData(response);
+
+      if (response.error) {
+        setError(response.error);
+        toast.error(response.error);
+      } else {
+        setData(response.data);
+      }
     } catch (err: any) {
-      setError(err);
+      setError(err.message);
       toast.error(err.message);
     } finally {
       setLoading(false);

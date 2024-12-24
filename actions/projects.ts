@@ -1,29 +1,148 @@
+// "use server";
+
+// import { db } from "@/lib/prisma";
+// import { auth, clerkClient } from "@clerk/nextjs/server";
+// interface Data {
+//   name: string;
+//   description: string;
+//   key: string;
+// }
+// export const createProject = async (data: Data) => {
+//   const { userId, orgId } = auth();
+//   if (!userId) throw new Error("Unauthorized");
+//   if (!orgId) throw new Error("No organization selected");
+//   const { data: membership } =
+//     await clerkClient().organizations.getOrganizationMembershipList({
+//       organizationId: orgId,
+//     });
+//   const userMembership = membership.find(
+//     (member) => member.publicUserData?.userId === userId
+//   );
+//   if (!userMembership || userMembership.role !== "org:admin") {
+//     throw new Error("Only organization admins can create projects");
+//   }
+
+//   try {
+//     const project = await db?.project.create({
+//       data: {
+//         name: data.name,
+//         organizationId: orgId,
+//         description: data.description,
+//         key: data.key,
+//       },
+//     });
+//     return project;
+//   } catch (error: any) {
+//     throw new Error("Error creating project", error.message);
+//   }
+// };
+
+// export const getProjects = async (orgId: string) => {
+//   const { userId } = auth();
+//   if (!userId) throw new Error("Unauthorized");
+//   const user = await db?.user.findUnique({
+//     where: {
+//       clerkUserId: userId,
+//     },
+//   });
+//   if (!user) throw new Error("User not found");
+//   const projects = await db?.project.findMany({
+//     where: {
+//       organizationId: orgId,
+//     },
+//     orderBy: { createdAt: "desc" },
+//   });
+//   return projects;
+// };
+
+// export const deleteProject = async (projectId: string) => {
+//   const { userId, orgId, orgRole } = auth();
+//   if (!userId || !orgId) {
+//     throw new Error("Unauthorized");
+//   }
+//   if (orgRole !== "org:admin") {
+//     throw new Error("Only organization admins can delete projects.");
+//   }
+//   const project = await db?.project.findUnique({
+//     where: {
+//       id: projectId,
+//     },
+//   });
+//   if (!project || project.organizationId !== orgId) {
+//     throw new Error(
+//       "Project not found or you don't have permission to delete it."
+//     );
+//   }
+//   await db?.project.delete({
+//     where: {
+//       id: projectId,
+//     },
+//   });
+//   return { success: true };
+// };
+
+// export const getProject = async (projectId: string) => {
+//   const { userId, orgId } = auth();
+//   if (!userId || !orgId) {
+//     throw new Error("Unauthorized");
+//   }
+
+//   const user = await db?.user.findUnique({
+//     where: {
+//       clerkUserId: userId,
+//     },
+//   });
+//   if (!user) {
+//     throw new Error("User not found.");
+//   }
+
+//   const project = await db.project.findUnique({
+//     where: { id: projectId },
+//     include: {
+//       sprints: {
+//         orderBy: {
+//           createdAt: "desc",
+//         },
+//       },
+//     },
+//   });
+//   if(!project){
+//     return null
+//   };
+//   if(project.organizationId !== orgId){
+//     return null
+//   }
+//   return project
+// };
+
 "use server";
 
 import { db } from "@/lib/prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
-interface Data {
+
+export async function createProject(data: {
   name: string;
   description: string;
   key: string;
-}
-export const createProject = async (data: Data) => {
-  const { userId, orgId } = auth();
-  if (!userId) throw new Error("Unauthorized");
-  if (!orgId) throw new Error("No organization selected");
-  const { data: membership } =
-    await clerkClient().organizations.getOrganizationMembershipList({
-      organizationId: orgId,
-    });
-  const userMembership = membership.find(
-    (member) => member.publicUserData?.userId === userId
-  );
-  if (!userMembership || userMembership.role !== "org:admin") {
-    throw new Error("Only organization admins can create projects");
-  }
-
+}) {
   try {
-    const project = await db?.project.create({
+    const { userId, orgId } = auth();
+    if (!userId) return { error: "Unauthorized" };
+    if (!orgId) return { error: "No organization selected" };
+
+    const { data: membership } =
+      await clerkClient.organizations.getOrganizationMembershipList({
+        organizationId: orgId,
+      });
+
+    const userMembership = membership.find(
+      (member) => member.publicUserData?.userId === userId
+    );
+    if (!userMembership || userMembership.role !== "org:admin") {
+      return { error: "Only organization admins can create projects" };
+    }
+
+    const project = await db.project.create({
       data: {
         name: data.name,
         organizationId: orgId,
@@ -31,86 +150,83 @@ export const createProject = async (data: Data) => {
         key: data.key,
       },
     });
-    return project;
+
+    return { data: project };
   } catch (error: any) {
-    throw new Error("Error creating project", error.message);
+    return { error: error.message || "Failed to create project" };
   }
-};
+}
 
-export const getProjects = async (orgId: string) => {
-  const { userId } = auth();
-  if (!userId) throw new Error("Unauthorized");
-  const user = await db?.user.findUnique({
-    where: {
-      clerkUserId: userId,
-    },
-  });
-  if (!user) throw new Error("User not found");
-  const projects = await db?.project.findMany({
-    where: {
-      organizationId: orgId,
-    },
-    orderBy: { createdAt: "desc" },
-  });
-  return projects;
-};
+export async function getProjects(orgId: string) {
+  try {
+    const { userId } = auth();
+    if (!userId) return { error: "Unauthorized" };
 
-export const deleteProject = async (projectId: string) => {
-  const { userId, orgId, orgRole } = auth();
-  if (!userId || !orgId) {
-    throw new Error("Unauthorized");
-  }
-  if (orgRole !== "org:admin") {
-    throw new Error("Only organization admins can delete projects.");
-  }
-  const project = await db?.project.findUnique({
-    where: {
-      id: projectId,
-    },
-  });
-  if (!project || project.organizationId !== orgId) {
-    throw new Error(
-      "Project not found or you don't have permission to delete it."
-    );
-  }
-  await db?.project.delete({
-    where: {
-      id: projectId,
-    },
-  });
-  return { success: true };
-};
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+    if (!user) return { error: "User not found" };
 
-export const getProject = async (projectId: string) => {
-  const { userId, orgId } = auth();
-  if (!userId || !orgId) {
-    throw new Error("Unauthorized");
-  }
+    const projects = await db.project.findMany({
+      where: { organizationId: orgId },
+      orderBy: { createdAt: "desc" },
+    });
 
-  const user = await db?.user.findUnique({
-    where: {
-      clerkUserId: userId,
-    },
-  });
-  if (!user) {
-    throw new Error("User not found.");
+    return { data: projects };
+  } catch (error: any) {
+    return { error: error.message || "Failed to fetch projects" };
   }
+}
 
-  const project = await db.project.findUnique({
-    where: { id: projectId },
-    include: {
-      sprints: {
-        orderBy: {
-          createdAt: "desc",
+export async function deleteProject(projectId: string) {
+  try {
+    const { userId, orgId, orgRole } = auth();
+    if (!userId || !orgId) {
+      return { error: "Unauthorized" };
+    }
+    if (orgRole !== "org:admin") {
+      return { error: "Only organization admins can delete projects" };
+    }
+
+    const project = await db.project.findUnique({
+      where: { id: projectId },
+    });
+    if (!project || project.organizationId !== orgId) {
+      return { error: "Project not found or permission denied" };
+    }
+
+    await db.project.delete({
+      where: { id: projectId },
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message || "Failed to delete project" };
+  }
+}
+
+export async function getProject(projectId: string) {
+  try {
+    const { userId, orgId } = auth();
+    if (!userId || !orgId) {
+      return { error: "Unauthorized" };
+    }
+
+    const project = await db.project.findUnique({
+      where: { id: projectId },
+      include: {
+        sprints: {
+          orderBy: { createdAt: "desc" },
         },
       },
-    },
-  });
-  if(!project){
-    return null
-  };
-  if(project.organizationId !== orgId){
-    return null
+    });
+
+    if (!project || project.organizationId !== orgId) {
+      return { error: "Project not found or permission denied" };
+    }
+
+    return { data: project };
+  } catch (error: any) {
+    return { error: error.message || "Failed to fetch project details" };
   }
-  return project
-};
+}
