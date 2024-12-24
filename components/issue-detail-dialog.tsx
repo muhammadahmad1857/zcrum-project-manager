@@ -172,7 +172,7 @@ export default function IssueDetailsDialog({
           )}
           {(deleteError || updateError) && (
             <p className="text-red-500">
-              {deleteError?.message || updateError?.message}
+              {deleteError || updateError}
             </p>
           )}
         </div>

@@ -130,7 +130,7 @@ const CreateProject = () => {
             placeholder="Enter Project Name"
             {...register("name")}
           />
-          {errors.name?.message && (
+          {errors.name && (
             <p className="text-red-500 text-sm mt-1">
               {String(errors.name.message)}
             </p>
@@ -144,9 +144,9 @@ const CreateProject = () => {
             placeholder="Enter Project Key"
             {...register("key")}
           />
-          {errors.key?.message && (
+          {errors.key && (
             <p className="text-red-500 text-sm mt-1">
-              {String(errors.key?.message)}
+              {String(errors.key.message)}
             </p>
           )}
         </div>
@@ -157,7 +157,7 @@ const CreateProject = () => {
             placeholder="Enter Project description"
             {...register("description")}
           />
-          {errors.description?.message && (
+          {errors.description && (
             <p className="text-red-500 text-sm mt-1">
               {String(errors.description.message)}
             </p>
