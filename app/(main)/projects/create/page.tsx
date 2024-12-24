@@ -69,7 +69,7 @@ const CreateProject = () => {
           >
             Create Organization
           </Button>
-          <OrgSwitcher />
+          <OrgSwitcher isCreating={true}/>
         </div>
       </div>
     );

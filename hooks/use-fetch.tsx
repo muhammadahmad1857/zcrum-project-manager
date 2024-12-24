@@ -21,6 +21,16 @@ const useFetch = (
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  const parseError = (err: any): string => {
+    // Check for Prisma P2002 error
+    if (err.code === "P2002" && err.meta?.target) {
+      const fields = err.meta.target.join(", ");
+      return `The following fields must be unique: ${fields}`;
+    }
+    // Default error message
+    return err.message || "An unexpected error occurred";
+  };
+
   const fn: FetchFunction = async (...args: any[]) => {
     setLoading(true);
     setError(null);
@@ -29,15 +39,16 @@ const useFetch = (
       const response = await cb(...args);
 
       if (response.error) {
-        setError(response.error);
-        toast.error(response.error);
+        const errorMessage = parseError(response.error);
+        setError(errorMessage);
+        toast.error(errorMessage);
       } else {
         setData(response.data);
       }
 
       return response; // Return the server response
     } catch (err: any) {
-      const errorMessage = err.message || "An unexpected error occurred";
+      const errorMessage = parseError(err);
       setError(errorMessage);
       toast.error(errorMessage);
       return { error: errorMessage };
