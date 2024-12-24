@@ -12,7 +12,8 @@ export const metadata: Metadata = {
 
 const Project = async ({ params }: { params: { projectid: string } }) => {
   const { projectid } = params;
-  const project = await getProject(projectid);
+  const proj = await getProject(projectid);
+  const project = proj.data
   if (!project) {
     notFound();
   }
