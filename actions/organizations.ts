@@ -42,12 +42,11 @@ export async function getOrganizations(slug: string) {
     return { error: error.message || "Failed to fetch organization details" };
   }
 }
-
 export async function getOrganizationUsers(orgId: string) {
   try {
     const { userId } = auth();
     if (!userId) {
-      return { error: "Unauthorized" };
+      return { error: "Unauthorized", data: [] };
     }
 
     const user = await db.user.findUnique({
@@ -55,7 +54,7 @@ export async function getOrganizationUsers(orgId: string) {
     });
 
     if (!user) {
-      return { error: "User not found" };
+      return { error: "User not found", data: [] };
     }
 
     const organizationMembership =
@@ -63,23 +62,26 @@ export async function getOrganizationUsers(orgId: string) {
         organizationId: orgId,
       });
 
-    // Filter out undefined values
+    if (!organizationMembership?.data) {
+      return { error: "No membership data found.", data: [] };
+    }
+
     const userIds = organizationMembership.data
       .map((member) => member.publicUserData?.userId)
-      .filter((id): id is string => id !== undefined); // Type guard to ensure only strings
-if(userIds.length <=0){
-    return { error: "No users found."};
+      .filter((id): id is string => id !== undefined); // Type guard
 
+    if (userIds.length === 0) {
+      return { error: "No users found.", data: [] };
+    }
 
-}
     const users = await db.user.findMany({
       where: {
         clerkUserId: { in: userIds },
       },
     });
 
-    return { data: users };
+    return { data: users, error: null }; // Always include data and error
   } catch (error: any) {
-    return { error: error.message || "Failed to fetch organization users" };
+    return { error: error.message || "Failed to fetch organization users", data: [] };
   }
 }

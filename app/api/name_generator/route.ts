@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
     """
 
     Focus on delivering high-quality, contextually appropriate content. Let’s begin!
+    Note: Generate in markdown only anf only if the type is "related to issue description"
     `;
 
     const result = await model.generateContent(prompt);

@@ -3,7 +3,9 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
-type FetchFunction = (...args: any[]) => Promise<{ data?: any; error?: string }>;
+type FetchFunction = (
+  ...args: any[]
+) => Promise<{ data?: any; error?: string }>;
 
 interface FetchState {
   data: any;
@@ -12,7 +14,7 @@ interface FetchState {
 }
 
 const useFetch = (
-  cb: FetchFunction
+  cb: any
 ): FetchState & {
   fn: FetchFunction;
   setData: Dispatch<SetStateAction<any>>;

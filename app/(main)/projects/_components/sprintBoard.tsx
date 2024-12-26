@@ -227,7 +227,6 @@ const SprintBoard = ({ sprints, projectId, orgId }: SprintBoardProps) => {
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         status={selectedStatus}
-        projectId={projectId}
         orgId={orgId}
         onIssueCreated={handleIssueCreated}
         sprintId={currentSprint.id}
