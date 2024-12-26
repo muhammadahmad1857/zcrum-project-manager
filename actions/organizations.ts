@@ -66,7 +66,7 @@ export async function getOrganizationUsers(orgId: string) {
 
     const userIds = organizationMembership.data
       .map((member) => member.publicUserData?.userId)
-      .filter((id): id is string => !!id);
+      
 
     const users = await db.user.findMany({
       where: {
