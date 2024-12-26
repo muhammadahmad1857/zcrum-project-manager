@@ -67,7 +67,11 @@ export async function getOrganizationUsers(orgId: string) {
     const userIds = organizationMembership.data
       .map((member) => member.publicUserData?.userId)
       .filter((id): id is string => id !== undefined); // Type guard to ensure only strings
+if(userIds.length <=0){
+    return { error: "No users found."};
 
+
+}
     const users = await db.user.findMany({
       where: {
         clerkUserId: { in: userIds },
